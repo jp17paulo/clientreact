@@ -6,7 +6,6 @@ import logoCadastro from "../../assets/cadastro.png";
 import api from "../../services/api";
 
 export default function Alunos() {
-  const [nome, setNome] = useState("");
   const [alunos, setAlunos] = useState([]);
 
   const email = localStorage.getItem("email");
@@ -28,6 +27,14 @@ export default function Alunos() {
       history.push("/");
     } catch (err) {
       alert("Não foi possível fazer o logout: " + err);
+    }
+  }
+
+  async function editAluno(id) {
+    try {
+      history.push(`aluno/novo/${id}`);
+    } catch (error) {
+      alert("Não foi possível editar o aluno");
     }
   }
 
@@ -53,7 +60,6 @@ export default function Alunos() {
       </header>
 
       <h1>Relação de Alunos</h1>
-
       <ul>
         {alunos.map((aluno) => (
           <li key={aluno.id}>
@@ -66,7 +72,7 @@ export default function Alunos() {
             <b>Idade:</b> {aluno.idade}
             <br />
             <br />
-            <button type="button">
+            <button onClick={() => editAluno(aluno.id)} type="button">
               <FiEdit size="25" color="#17202a" />
             </button>
             <button type="button">
